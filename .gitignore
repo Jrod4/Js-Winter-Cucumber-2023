@@ -1,4 +1,4 @@
-node_modules
-alllure-results
-allure-report
-add reports
+node_modules/
+allure-results/
+# allure-report/
+add reports/
