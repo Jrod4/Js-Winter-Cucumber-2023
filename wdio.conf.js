@@ -57,7 +57,7 @@ exports.config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 5,
+        // maxInstances: 20,
         //
         browserName: 'chrome',
         acceptInsecureCerts: true
@@ -97,7 +97,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://www.facebook.com',
+    baseUrl: 'https://www.Hotels.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -135,7 +135,13 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: [['allure', 
+                        {outputDir: 'Reports/allure-results',
+                         disableWebdriverStepsReporting: true,
+                         useCucumberStepReporter: true,
+                         disableWebdriverScreenshotsReporting: false,
+                        }
+                ]],
 
 
     //
@@ -241,8 +247,9 @@ exports.config = {
      * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
      * @param {Object}                 context  Cucumber World object
      */
-    // beforeScenario: function (world, context) {
-    // },
+    beforeScenario: async function (world, context) {
+        await browser.url("/");
+    },
     /**
      *
      * Runs before a Cucumber Step.
@@ -263,8 +270,12 @@ exports.config = {
      * @param {number}             result.duration  duration of scenario in milliseconds
      * @param {Object}             context          Cucumber World object
      */
-    // afterStep: function (step, scenario, result, context) {
-    // },
+    afterStep: async function (step, scenario, {error, duration, passed}, result, context) {
+        if(error) {
+            //take screen shot
+            await browser.takeScreenshot()
+        }
+    },
     /**
      *
      * Runs after a Cucumber Scenario.
