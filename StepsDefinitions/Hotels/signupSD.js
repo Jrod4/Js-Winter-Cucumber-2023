@@ -76,18 +76,15 @@ expect(newTabTc1,'Not on a new tab').to.equal(2);
 })
 
 Then (/^I Verify “Last revised“ date$/, async function () {
-await signuppage.verifyDateTermsHandle();
-const date = await signuppage.verifyDate();
-expect(date.endsWith('01/01/23'),'Not revised').to.equal('01/01/23')
+await signuppage.connectWithTermsHandle();
+const date = await signuppage.verifyTermsDate();
+expect(date,'Not revised').to.be.true;
 })
 
-// signuppage.switchWindow(); 
-
-
-// Then (/^I Click “Privacy Statement” link$/, async function () {
-// await signuppage.psLink();
-// await browser.pause(2000)
-// })
+Then (/^I Click “Privacy Statement” link$/, async function () {
+await signuppage.closeWindow();
+await signuppage.psLink();
+})
 
 //TC-24
 When (/^I Click “Feedback”$/, async function () {

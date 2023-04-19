@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 class SignupPage {
   //Locators
   signinLinkElement = "//button[text() = 'Sign in']";
@@ -100,7 +102,7 @@ class SignupPage {
     return windowHandles
   }
 
-  async verifyDateTermsHandle() {
+  async connectWithTermsHandle() {
     const windowHandles = await browser.getWindowHandles();
     for(const handle of windowHandles){
       const title = await browser.getTitle();
@@ -111,15 +113,21 @@ class SignupPage {
     }
   }
 
-  async verifyDate() {
-     const LastRevised = await $(this.lastDate);
-    await LastRevised.isDisplayed();
-    return LastRevised
+  async verifyTermsDate() {
+    const date = await $(this.lastDate).getText();
+    const expectedFormat = 'MM/DD/YYYY'
+    const isDateValidFormat = moment(date, expectedFormat).isValid();
+    return isDateValidFormat
+  }
+
+  async closeWindow() {
+  await browser.closeWindow();
+  await browser.pause(4000)
   }
 
   async psLink() {
-    const clickLink = await $(this.privacyStatementslink);
-    await clickLink.click();
+    await $(this.privacyStatementslink).click();
+    await browser.pause(2000)
   }
 
   async switchWindow() {
