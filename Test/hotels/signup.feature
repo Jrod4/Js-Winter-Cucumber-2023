@@ -25,7 +25,7 @@ Feature: Hotels Signup
             When I Click “Terms and Conditions” link
             Then I Verify “Terms and Conditions” page opens in new tab
             Then I Verify “Last revised“ date 
-            # Then I Click “Privacy Statement” link
+            Then I Click “Privacy Statement” link
             # Then I Verify “Privacy Statement” page opens in new tab
             # Then I Verify “Last Updated“ date format
 
